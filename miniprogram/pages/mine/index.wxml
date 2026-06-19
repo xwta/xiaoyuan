@@ -2,9 +2,10 @@
   <view class="card user-card">
     <view class="avatar">零</view>
     <view>
-      <view class="nickname">校园零食用户</view>
-      <view class="muted">第一校区 · 6号楼</view>
+      <view class="nickname">{{user.nickname || '校园零食用户'}}</view>
+      <view class="muted">{{user ? '已登录' : '未登录'}}</view>
     </view>
+    <button size="mini" loading="{{logging}}" bindtap="handleLogin">{{user ? '刷新' : '登录'}}</button>
   </view>
 
   <view class="card menu-card">
