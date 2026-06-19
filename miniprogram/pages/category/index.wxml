@@ -1,0 +1,29 @@
+<view class="category-page">
+  <view class="sidebar">
+    <view
+      class="category-item {{activeCategoryId === item.id ? 'active' : ''}}"
+      wx:for="{{categories}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="changeCategory"
+    >
+      {{item.name}}
+    </view>
+  </view>
+
+  <scroll-view class="product-panel" scroll-y>
+    <view class="product-card" wx:for="{{products}}" wx:key="id">
+      <image class="product-image" src="{{item.coverUrl}}" mode="aspectFill" />
+      <view class="product-info">
+        <view class="product-name">{{item.name}}</view>
+        <view class="product-tags">
+          <text class="tag" wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+        </view>
+        <view class="product-bottom">
+          <text class="price">¥{{item.price}}</text>
+          <button size="mini" class="primary-btn" bindtap="addToCart" data-id="{{item.id}}">+</button>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
