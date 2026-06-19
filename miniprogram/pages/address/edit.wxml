@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="card form-card">
+    <view class="field">
+      <text>校区</text>
+      <input placeholder="请输入校区" value="{{form.campusName}}" data-field="campusName" bindinput="handleInput" />
+    </view>
+    <view class="field">
+      <text>宿舍楼</text>
+      <input placeholder="例如：6号楼" value="{{form.buildingName}}" data-field="buildingName" bindinput="handleInput" />
+    </view>
+    <view class="field">
+      <text>寝室号</text>
+      <input placeholder="例如：602" value="{{form.roomNo}}" data-field="roomNo" bindinput="handleInput" />
+    </view>
+    <view class="field">
+      <text>姓名</text>
+      <input placeholder="请输入姓名" value="{{form.contactName}}" data-field="contactName" bindinput="handleInput" />
+    </view>
+    <view class="field">
+      <text>手机号</text>
+      <input placeholder="请输入手机号" value="{{form.phone}}" data-field="phone" bindinput="handleInput" />
+    </view>
+  </view>
+
+  <button class="primary-btn" bindtap="submitAddress">保存地址</button>
+</view>
