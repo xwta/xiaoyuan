@@ -5,6 +5,18 @@ const http = axios.create({
   timeout: 10000
 });
 
+http.interceptors.request.use((config) => {
+  const token = localStorage.getItem('campus_admin_token');
+  if (token) {
+    config.headers.Authorization = token;
+  }
+  return config;
+});
+
+export function createSession(data) {
+  return http.post('/admin/session', data).then(res => res.data);
+}
+
 export function fetchOverview() {
   return http.get('/admin/overview').then(res => res.data);
 }
