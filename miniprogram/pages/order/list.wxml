@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="tabs card">
+    <view
+      class="tab {{activeStatus === item.value ? 'active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="value"
+      data-value="{{item.value}}"
+      bindtap="changeStatus"
+    >{{item.label}}</view>
+  </view>
+
+  <view class="card order-card" wx:for="{{orders}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+    <view class="order-header">
+      <text>{{item.orderNo}}</text>
+      <text class="status">{{item.statusText}}</text>
+    </view>
+    <view class="order-products">{{item.productSummary}}</view>
+    <view class="muted">{{item.deliveryText}} · {{item.addressText}}</view>
+    <view class="order-footer">
+      <text>共 {{item.quantity}} 件</text>
+      <text class="price">¥{{item.payAmount}}</text>
+    </view>
+  </view>
+</view>
