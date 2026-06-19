@@ -1,0 +1,42 @@
+.status-card {
+  background: linear-gradient(135deg, #fff4e6, #ffffff);
+}
+
+.status-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #ff7a00;
+  margin-bottom: 10rpx;
+}
+
+.section-title {
+  font-weight: 700;
+  margin-bottom: 20rpx;
+}
+
+.muted {
+  color: #888;
+  font-size: 24rpx;
+  margin-top: 8rpx;
+}
+
+.verify-code {
+  font-size: 52rpx;
+  font-weight: 700;
+  letter-spacing: 8rpx;
+  color: #ff7a00;
+  text-align: center;
+  padding: 24rpx 0;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18rpx;
+}
+
+.total {
+  border-top: 1px solid #f1f1f1;
+  padding-top: 18rpx;
+  font-weight: 700;
+}
