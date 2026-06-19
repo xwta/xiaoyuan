@@ -5,6 +5,7 @@ const productRoutes = require('./routes/products');
 const campusRoutes = require('./routes/campus');
 const orderRoutes = require('./routes/orders');
 const agentRoutes = require('./routes/agent');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,6 +21,7 @@ app.use('/api', productRoutes);
 app.use('/api', campusRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', agentRoutes);
+app.use('/api', adminRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: '接口不存在' });
