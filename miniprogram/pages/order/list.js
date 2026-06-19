@@ -1,42 +1,50 @@
+const { request } = require('../../utils/request');
+
 Page({
   data: {
     activeStatus: 'all',
     tabs: [
       { label: '全部', value: 'all' },
+      { label: '待支付', value: 'pending_pay' },
       { label: '待接单', value: 'pending_accept' },
       { label: '配送中', value: 'delivering' },
       { label: '待自提', value: 'waiting_pickup' },
       { label: '已完成', value: 'completed' }
     ],
-    allOrders: [
-      {
-        id: 1,
-        orderNo: 'SN202606190001',
-        status: 'pending_accept',
-        statusText: '待接单',
-        productSummary: '可乐 500ml、桶装泡面',
-        deliveryText: '送到寝室',
-        addressText: '6号楼 602',
-        quantity: 3,
-        payAmount: '11.50'
-      },
-      {
-        id: 2,
-        orderNo: 'SN202606190002',
-        status: 'waiting_pickup',
-        statusText: '待自提',
-        productSummary: '薯片、矿泉水',
-        deliveryText: '代理点自提',
-        addressText: '6号楼代理点',
-        quantity: 2,
-        payAmount: '8.90'
-      }
-    ],
-    orders: []
+    allOrders: [],
+    orders: [],
+    loading: false
   },
 
-  onLoad() {
-    this.filterOrders('all');
+  onShow() {
+    this.loadOrders();
+  },
+
+  async loadOrders() {
+    this.setData({ loading: true });
+    try {
+      const orders = await request({ url: '/orders' });
+      const formattedOrders = orders.map(order => ({
+        ...order,
+        productSummary: order.items && order.items.length
+          ? order.items.map(item => item.name || `商品${item.productId}`).join('、')
+          : '订单商品',
+        addressText: order.deliveryType === 'pickup'
+          ? '代理点自提'
+          : `${order.buildingName || ''} ${order.roomNo || ''}`,
+        quantity: order.items
+          ? order.items.reduce((sum, item) => sum + Number(item.quantity || 0), 0)
+          : 0,
+        payAmount: Number(order.payAmount || 0).toFixed(2)
+      }));
+
+      this.setData({ allOrders: formattedOrders });
+      this.filterOrders(this.data.activeStatus);
+    } catch (error) {
+      console.error('load orders failed:', error);
+    } finally {
+      this.setData({ loading: false });
+    }
   },
 
   changeStatus(event) {
