@@ -19,6 +19,7 @@ body {
   background: #111827;
   color: #fff;
   padding: 24px 16px;
+  box-shadow: 8px 0 24px rgba(15, 23, 42, 0.12);
 }
 
 .logo {
@@ -33,6 +34,7 @@ body {
   color: #cbd5e1;
   margin-bottom: 8px;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .menu.active,
@@ -44,6 +46,7 @@ body {
 .main {
   flex: 1;
   padding: 28px;
+  overflow: auto;
 }
 
 .header {
@@ -70,6 +73,10 @@ body {
   margin-bottom: 24px;
 }
 
+.stat-card {
+  border-radius: 16px;
+}
+
 .stat-card .label {
   color: #64748b;
   margin-bottom: 12px;
@@ -85,4 +92,31 @@ body {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: 18px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.el-card {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.el-table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+@media (max-width: 1100px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
 }
