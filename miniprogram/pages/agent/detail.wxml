@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="card status-card">
+    <view class="status-title">{{order.statusText}}</view>
+    <view class="muted">{{order.deliveryText}}</view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">学生信息</view>
+    <view>{{order.contactName}} {{order.phone}}</view>
+    <view class="muted">{{order.addressText}}</view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">商品明细</view>
+    <view class="item-row" wx:for="{{order.items}}" wx:key="id">
+      <text>{{item.name}} x{{item.quantity}}</text>
+      <text>¥{{item.totalAmount}}</text>
+    </view>
+  </view>
+
+  <view class="footer card">
+    <button bindtap="acceptOrder">接单</button>
+    <button class="primary-btn" bindtap="completeOrder">完成订单</button>
+  </view>
+</view>
