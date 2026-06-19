@@ -1,16 +1,26 @@
+const { request } = require('../../utils/request');
+
 Page({
   data: {
-    addresses: [
-      {
-        id: 1,
-        campusName: '第一校区',
-        buildingName: '6号楼',
-        roomNo: '602',
-        contactName: '张同学',
-        phone: '13800000000',
-        isDefault: true
-      }
-    ]
+    userId: 1,
+    addresses: [],
+    loading: false
+  },
+
+  onShow() {
+    this.loadAddresses();
+  },
+
+  async loadAddresses() {
+    this.setData({ loading: true });
+    try {
+      const addresses = await request({ url: `/users/${this.data.userId}/addresses` });
+      this.setData({ addresses });
+    } catch (error) {
+      console.error('load addresses failed:', error);
+    } finally {
+      this.setData({ loading: false });
+    }
   },
 
   goEdit() {
