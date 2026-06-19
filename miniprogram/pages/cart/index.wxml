@@ -1,11 +1,20 @@
 <view class="container">
+  <view wx:if="{{!cartItems.length}}" class="empty card">
+    <view>购物车还是空的</view>
+    <view class="muted">去分类页加点零食，别让胃替你做产品测试。</view>
+  </view>
+
   <view class="card" wx:for="{{cartItems}}" wx:key="id">
     <view class="cart-row">
       <view>
         <view class="name">{{item.name}}</view>
         <view class="price">¥{{item.price}}</view>
       </view>
-      <view class="quantity">x{{item.quantity}}</view>
+      <view class="quantity-control">
+        <button size="mini" data-id="{{item.id}}" bindtap="decrease">-</button>
+        <text>x{{item.quantity}}</text>
+        <button size="mini" data-id="{{item.id}}" bindtap="increase">+</button>
+      </view>
     </view>
   </view>
 
