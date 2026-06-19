@@ -1,17 +1,27 @@
+const { request } = require('../../utils/request');
+const { addCartItem } = require('../../utils/cart');
+
 Page({
   data: {
     activeCategoryId: 1,
-    categories: [
-      { id: 1, name: '饮料' },
-      { id: 2, name: '泡面' },
-      { id: 3, name: '零食' },
-      { id: 4, name: '日用' }
-    ],
-    products: []
+    categories: [],
+    products: [],
+    loading: false
   },
 
-  onLoad() {
-    this.loadProducts(1);
+  async onLoad() {
+    await this.loadCategories();
+    this.loadProducts(this.data.activeCategoryId);
+  },
+
+  async loadCategories() {
+    try {
+      const categories = await request({ url: '/categories' });
+      const activeCategoryId = categories[0] ? categories[0].id : 1;
+      this.setData({ categories, activeCategoryId });
+    } catch (error) {
+      console.error('load categories failed:', error);
+    }
   },
 
   changeCategory(event) {
@@ -20,28 +30,34 @@ Page({
     this.loadProducts(categoryId);
   },
 
-  loadProducts(categoryId) {
-    const productMap = {
-      1: [
-        { id: 1, name: '可乐 500ml', price: '3.00', coverUrl: '/assets/product-placeholder.png', tags: ['冰饮', '热卖'] },
-        { id: 2, name: '矿泉水', price: '2.00', coverUrl: '/assets/product-placeholder.png', tags: ['寝室必备'] }
-      ],
-      2: [
-        { id: 3, name: '桶装泡面', price: '5.50', coverUrl: '/assets/product-placeholder.png', tags: ['夜宵'] }
-      ],
-      3: [
-        { id: 4, name: '薯片', price: '6.90', coverUrl: '/assets/product-placeholder.png', tags: ['聚会'] }
-      ],
-      4: [
-        { id: 5, name: '抽纸', price: '4.90', coverUrl: '/assets/product-placeholder.png', tags: ['刚需'] }
-      ]
-    };
+  async loadProducts(categoryId) {
+    this.setData({ loading: true });
+    try {
+      const products = await request({
+        url: `/products?categoryId=${categoryId}`
+      });
 
-    this.setData({ products: productMap[categoryId] || [] });
+      this.setData({
+        products: products.map(item => ({
+          ...item,
+          price: Number(item.price).toFixed(2),
+          coverUrl: item.coverUrl || '/assets/product-placeholder.png',
+          tags: item.tags || []
+        }))
+      });
+    } catch (error) {
+      console.error('load products failed:', error);
+    } finally {
+      this.setData({ loading: false });
+    }
   },
 
   addToCart(event) {
-    console.log('add to cart:', event.currentTarget.dataset.id);
+    const productId = event.currentTarget.dataset.id;
+    const product = this.data.products.find(item => item.id === productId);
+    if (!product) return;
+
+    addCartItem(product, 1);
     wx.showToast({ title: '已加入购物车', icon: 'success' });
   }
 });
