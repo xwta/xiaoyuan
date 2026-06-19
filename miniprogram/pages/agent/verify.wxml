@@ -1,15 +1,16 @@
 <view class="container">
   <view class="card">
-    <view class="title">自提核销</view>
-    <view class="muted">输入学生出示的核销码，完成自提订单</view>
+    <view class="title">自提取货处理</view>
+    <view class="muted">输入学生出示的订单 ID 和取货码，完成自提订单</view>
   </view>
 
   <view class="card">
-    <input class="verify-input" maxlength="8" placeholder="请输入核销码" value="{{verifyCode}}" bindinput="handleInput" />
-    <button class="primary-btn" bindtap="verifyOrder">确认核销</button>
+    <input class="order-input" placeholder="请输入订单ID" value="{{orderId}}" bindinput="handleOrderIdInput" />
+    <input class="verify-input" maxlength="8" placeholder="请输入取货码" value="{{code}}" bindinput="handleInput" />
+    <button class="primary-btn" loading="{{submitting}}" bindtap="submitCode">确认处理</button>
   </view>
 
   <view class="card tips">
-    <view>核销后订单将变为已完成，并自动生成代理佣金。</view>
+    <view>完成后订单将变为已完成，并生成代理佣金记录。</view>
   </view>
 </view>
