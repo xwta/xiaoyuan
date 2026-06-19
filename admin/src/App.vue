@@ -68,73 +68,19 @@
         </section>
       </template>
 
-      <el-card v-if="activeMenu === 'products'">
-        <template #header>
-          <div class="card-header">
-            <span>商品管理</span>
-            <el-button type="primary" size="small" @click="showProductDialog = true">新增商品</el-button>
-          </div>
-        </template>
-        <el-table :data="products" stripe>
-          <el-table-column prop="id" label="ID" width="80" />
-          <el-table-column prop="name" label="商品名称" min-width="160" />
-          <el-table-column prop="price" label="价格" width="100">
-            <template #default="scope">¥{{ Number(scope.row.price || 0).toFixed(2) }}</template>
-          </el-table-column>
-          <el-table-column prop="count" label="数量" width="100" />
-          <el-table-column prop="categoryId" label="分类ID" width="100" />
-        </el-table>
-      </el-card>
-
-      <el-card v-if="activeMenu === 'orders'">
-        <template #header>订单管理</template>
-        <el-table :data="orders" stripe>
-          <el-table-column prop="orderNo" label="订单号" min-width="180" />
-          <el-table-column prop="contactName" label="用户" width="100" />
-          <el-table-column prop="phone" label="手机号" width="140" />
-          <el-table-column prop="statusText" label="状态" width="100" />
-          <el-table-column prop="deliveryText" label="方式" width="120" />
-          <el-table-column prop="payAmount" label="金额" width="100">
-            <template #default="scope">¥{{ Number(scope.row.payAmount || 0).toFixed(2) }}</template>
-          </el-table-column>
-        </el-table>
-      </el-card>
-
-      <el-card v-if="activeMenu === 'agents'">
-        <template #header>代理点管理</template>
-        <el-table :data="agents" stripe>
-          <el-table-column prop="id" label="ID" width="80" />
-          <el-table-column prop="name" label="代理点" min-width="180" />
-          <el-table-column prop="pickupAddress" label="自提地址" min-width="220" />
-          <el-table-column prop="status" label="状态" width="100" />
-          <el-table-column prop="buildingId" label="服务楼栋" width="120" />
-        </el-table>
-      </el-card>
-
-      <el-dialog v-model="showProductDialog" title="新增商品" width="420px">
-        <el-form label-width="80px">
-          <el-form-item label="名称">
-            <el-input v-model="productForm.name" placeholder="例如：可乐 500ml" />
-          </el-form-item>
-          <el-form-item label="价格">
-            <el-input v-model="productForm.price" placeholder="例如：3.00" />
-          </el-form-item>
-          <el-form-item label="数量">
-            <el-input v-model="productForm.count" placeholder="例如：100" />
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <el-button @click="showProductDialog = false">取消</el-button>
-          <el-button type="primary" @click="submitProduct">保存</el-button>
-        </template>
-      </el-dialog>
+      <ProductManager v-if="activeMenu === 'products'" :products="products" @refresh="loadData" />
+      <OrderManager v-if="activeMenu === 'orders'" :orders="orders" @refresh="loadData" />
+      <AgentManager v-if="activeMenu === 'agents'" :agents="agents" @refresh="loadData" />
     </main>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue';
-import { createProduct, fetchAgents, fetchOrders, fetchOverview, fetchProducts } from './api';
+import AgentManager from './components/AgentManager.vue';
+import OrderManager from './components/OrderManager.vue';
+import ProductManager from './components/ProductManager.vue';
+import { fetchAgents, fetchOrders, fetchOverview, fetchProducts } from './api';
 
 const menus = [
   { key: 'dashboard', label: '数据看板' },
@@ -144,9 +90,7 @@ const menus = [
 ];
 
 const activeMenu = ref('dashboard');
-const showProductDialog = ref(false);
 const overview = reactive({ productCount: 0, orderCount: 0, agentCount: 0, salesAmount: '0.00' });
-const productForm = reactive({ name: '', price: '', count: '' });
 const products = ref([]);
 const orders = ref([]);
 const agents = ref([]);
@@ -168,16 +112,6 @@ async function loadData() {
   products.value = productData;
   orders.value = orderData;
   agents.value = agentData;
-}
-
-async function submitProduct() {
-  if (!productForm.name) return;
-  await createProduct({ ...productForm, categoryId: 1 });
-  productForm.name = '';
-  productForm.price = '';
-  productForm.count = '';
-  showProductDialog.value = false;
-  await loadData();
 }
 
 onMounted(loadData);
