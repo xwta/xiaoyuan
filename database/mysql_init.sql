@@ -1,6 +1,32 @@
 CREATE DATABASE IF NOT EXISTS campus_snack DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE campus_snack;
 
+CREATE TABLE IF NOT EXISTS app_user (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  openid VARCHAR(128) NOT NULL UNIQUE,
+  nickname VARCHAR(64),
+  avatar_url VARCHAR(255),
+  phone VARCHAR(32),
+  status VARCHAR(20) DEFAULT 'on',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS user_address (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  campus_id BIGINT NOT NULL,
+  campus_name VARCHAR(128),
+  building_id BIGINT NOT NULL,
+  building_name VARCHAR(128),
+  room_no VARCHAR(64),
+  contact_name VARCHAR(64),
+  phone VARCHAR(32),
+  is_default TINYINT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS product_category (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(64) NOT NULL,
@@ -75,6 +101,24 @@ CREATE TABLE IF NOT EXISTS snack_order_item (
   total_amount DECIMAL(10,2) DEFAULT 0.00,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS agent_commission (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  agent_id BIGINT NOT NULL,
+  order_id BIGINT,
+  order_no VARCHAR(64),
+  amount DECIMAL(10,2) DEFAULT 0.00,
+  status VARCHAR(20) DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO app_user (id, openid, nickname, avatar_url, phone, status) VALUES
+  (1, 'mock_openid_001', '校园同学', '', '', 'on')
+ON DUPLICATE KEY UPDATE nickname = VALUES(nickname);
+
+INSERT INTO user_address (id, user_id, campus_id, campus_name, building_id, building_name, room_no, contact_name, phone, is_default) VALUES
+  (1, 1, 1, '第一校区', 1, '6号楼', '602', '张同学', '13800000000', 1)
+ON DUPLICATE KEY UPDATE room_no = VALUES(room_no), contact_name = VALUES(contact_name);
 
 INSERT INTO product_category (id, name, sort_order, status) VALUES
   (1, '饮料水饮', 1, 'on'),
