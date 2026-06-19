@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="card" wx:for="{{cartItems}}" wx:key="id">
+    <view class="cart-row">
+      <view>
+        <view class="name">{{item.name}}</view>
+        <view class="price">¥{{item.price}}</view>
+      </view>
+      <view class="quantity">x{{item.quantity}}</view>
+    </view>
+  </view>
+
+  <view class="footer card">
+    <view>合计：<text class="price">¥{{totalAmount}}</text></view>
+    <button class="primary-btn" bindtap="goConfirm">去结算</button>
+  </view>
+</view>
