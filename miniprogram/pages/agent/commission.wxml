@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="card total-card">
+    <view class="label">待结算佣金</view>
+    <view class="amount">¥{{summary.pending}}</view>
+    <view class="muted">本月已结算：¥{{summary.settled}}</view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">佣金明细</view>
+    <view class="record" wx:for="{{records}}" wx:key="id">
+      <view>
+        <view class="order-no">{{item.orderNo}}</view>
+        <view class="muted">{{item.createdAt}} · {{item.typeText}}</view>
+      </view>
+      <view class="price">+¥{{item.amount}}</view>
+    </view>
+  </view>
+</view>
