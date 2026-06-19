@@ -1,0 +1,45 @@
+.agent-header {
+  background: linear-gradient(135deg, #fff4e6, #ffffff);
+}
+
+.title {
+  font-size: 38rpx;
+  font-weight: 700;
+  margin-bottom: 10rpx;
+}
+
+.muted {
+  color: #888;
+  font-size: 24rpx;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+}
+
+.stat-card {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 34rpx;
+  color: #ff7a00;
+  font-weight: 700;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: #888;
+}
+
+.menu-item {
+  padding: 28rpx 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
