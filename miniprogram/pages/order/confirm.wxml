@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="card">
+    <view class="section-title">配送方式</view>
+    <radio-group bindchange="changeDeliveryType">
+      <label class="radio-row">
+        <radio value="dormitory" checked="{{deliveryType === 'dormitory'}}" />
+        送到寝室
+      </label>
+      <label class="radio-row">
+        <radio value="pickup" checked="{{deliveryType === 'pickup'}}" />
+        代理点自提
+      </label>
+    </radio-group>
+  </view>
+
+  <view class="card">
+    <view class="section-title">校园地址</view>
+    <view class="field">校区：{{address.campusName}}</view>
+    <view class="field">宿舍楼：{{address.buildingName}}</view>
+    <view class="field" wx:if="{{deliveryType === 'dormitory'}}">寝室号：{{address.roomNo}}</view>
+    <view class="field">手机号：{{address.phone}}</view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">代理点</view>
+    <view>{{agent.name}}</view>
+    <view class="muted">{{agent.pickupAddress}}</view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">订单商品</view>
+    <view class="order-item" wx:for="{{items}}" wx:key="id">
+      <text>{{item.name}} x{{item.quantity}}</text>
+      <text>¥{{item.totalAmount}}</text>
+    </view>
+  </view>
+
+  <view class="footer card">
+    <view>实付：<text class="price">¥{{payAmount}}</text></view>
+    <button class="primary-btn" bindtap="submitOrder">提交订单</button>
+  </view>
+</view>
