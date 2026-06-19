@@ -1,0 +1,21 @@
+.title {
+  font-size: 38rpx;
+  font-weight: 700;
+  margin-bottom: 12rpx;
+}
+
+.muted,
+.tips {
+  color: #888;
+  font-size: 24rpx;
+}
+
+.verify-input {
+  text-align: center;
+  font-size: 48rpx;
+  font-weight: 700;
+  letter-spacing: 8rpx;
+  padding: 30rpx 0;
+  margin-bottom: 30rpx;
+  border-bottom: 1px solid #eee;
+}
