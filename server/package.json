@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "cors": "latest",
-    "express": "latest"
+    "dotenv": "latest",
+    "express": "latest",
+    "mysql2": "latest"
   }
 }
