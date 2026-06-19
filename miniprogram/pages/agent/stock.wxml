@@ -4,7 +4,9 @@
     <view class="muted">低库存商品会优先提示补货</view>
   </view>
 
-  <view class="card stock-card" wx:for="{{stocks}}" wx:key="id">
+  <view wx:if="{{!list.length}}" class="card empty">暂无库存数据</view>
+
+  <view class="card stock-card" wx:for="{{list}}" wx:key="id">
     <view class="stock-top">
       <view>
         <view class="name">{{item.name}}</view>
