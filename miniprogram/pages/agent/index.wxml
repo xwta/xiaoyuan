@@ -1,0 +1,28 @@
+<view class="container">
+  <view class="card agent-header">
+    <view class="title">6号楼校园代理点</view>
+    <view class="muted">今日接单状态：营业中</view>
+  </view>
+
+  <view class="stats-grid">
+    <view class="stat-card card">
+      <view class="stat-value">{{summary.todayOrders}}</view>
+      <view class="stat-label">今日订单</view>
+    </view>
+    <view class="stat-card card">
+      <view class="stat-value">¥{{summary.todaySales}}</view>
+      <view class="stat-label">今日销售额</view>
+    </view>
+    <view class="stat-card card">
+      <view class="stat-value">¥{{summary.todayCommission}}</view>
+      <view class="stat-label">今日佣金</view>
+    </view>
+  </view>
+
+  <view class="card menu-card">
+    <view class="menu-item" bindtap="goOrders">订单管理</view>
+    <view class="menu-item" bindtap="goVerify">自提核销</view>
+    <view class="menu-item" bindtap="goStock">库存管理</view>
+    <view class="menu-item" bindtap="goCommission">佣金中心</view>
+  </view>
+</view>
