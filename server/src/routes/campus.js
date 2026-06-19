@@ -1,29 +1,36 @@
 const express = require('express');
-const { campuses, buildings, agents } = require('../mock/store');
+const campusRepository = require('../repositories/campusRepository');
 
 const router = express.Router();
 
-router.get('/campuses', (req, res) => {
-  res.json(campuses);
+router.get('/campuses', async (req, res, next) => {
+  try {
+    const result = await campusRepository.listCampuses();
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/buildings', (req, res) => {
-  const campusId = Number(req.query.campusId);
-  const result = buildings.filter(item => !campusId || item.campusId === campusId);
-  res.json(result);
+router.get('/buildings', async (req, res, next) => {
+  try {
+    const result = await campusRepository.listBuildings(req.query.campusId);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/agents', (req, res) => {
-  const campusId = Number(req.query.campusId);
-  const buildingId = Number(req.query.buildingId);
-
-  const result = agents.filter(item => {
-    if (campusId && item.campusId !== campusId) return false;
-    if (buildingId && item.buildingId !== buildingId) return false;
-    return true;
-  });
-
-  res.json(result);
+router.get('/agents', async (req, res, next) => {
+  try {
+    const result = await campusRepository.listAgents({
+      campusId: req.query.campusId,
+      buildingId: req.query.buildingId
+    });
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
