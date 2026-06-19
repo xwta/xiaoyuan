@@ -2,9 +2,11 @@ const { request } = require('../../utils/request');
 
 Page({
   data: {
+    orderId: null,
     order: {
       id: null,
       orderNo: '',
+      status: '',
       statusText: '',
       deliveryText: '',
       contactName: '',
@@ -16,11 +18,13 @@ Page({
       payAmount: '0.00',
       items: []
     },
-    loading: false
+    loading: false,
+    operating: false
   },
 
   onLoad(options) {
     if (options.id) {
+      this.setData({ orderId: options.id });
       this.loadOrderDetail(options.id);
     }
   },
@@ -53,6 +57,34 @@ Page({
       console.error('load order detail failed:', error);
     } finally {
       this.setData({ loading: false });
+    }
+  },
+
+  async checkoutOrder() {
+    if (!this.data.orderId || this.data.operating) return;
+    this.setData({ operating: true });
+    try {
+      await request({ url: `/orders/${this.data.orderId}/checkout`, method: 'POST' });
+      wx.showToast({ title: '处理成功', icon: 'success' });
+      this.loadOrderDetail(this.data.orderId);
+    } catch (error) {
+      console.error('checkout order failed:', error);
+    } finally {
+      this.setData({ operating: false });
+    }
+  },
+
+  async completeOrder() {
+    if (!this.data.orderId || this.data.operating) return;
+    this.setData({ operating: true });
+    try {
+      await request({ url: `/orders/${this.data.orderId}/complete`, method: 'POST' });
+      wx.showToast({ title: '订单已完成', icon: 'success' });
+      this.loadOrderDetail(this.data.orderId);
+    } catch (error) {
+      console.error('complete order failed:', error);
+    } finally {
+      this.setData({ operating: false });
     }
   }
 });
