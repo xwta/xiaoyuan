@@ -8,6 +8,7 @@ const orderRoutes = require('./routes/orders');
 const agentRoutes = require('./routes/agent');
 const userRoutes = require('./routes/users');
 const checkoutRoutes = require('./routes/checkout');
+const sessionRoutes = require('./routes/adminAuth');
 const adminOverviewRoutes = require('./routes/adminOverview');
 const adminRoutes = require('./routes/admin');
 
@@ -26,6 +27,7 @@ app.use('/api', orderRoutes);
 app.use('/api', agentRoutes);
 app.use('/api', userRoutes);
 app.use('/api', checkoutRoutes);
+app.use('/api', sessionRoutes);
 app.use('/api', adminOverviewRoutes);
 app.use('/api', adminRoutes);
 
