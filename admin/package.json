@@ -1,0 +1,19 @@
+{
+  "name": "campus-snack-admin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "校园零食售卖平台管理后台",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "latest",
+    "vite": "latest",
+    "vue": "latest",
+    "axios": "latest",
+    "element-plus": "latest"
+  },
+  "devDependencies": {}
+}
