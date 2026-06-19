@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="banner card">
+    <view class="title">校园零食 · 送到寝室</view>
+    <view class="subtitle">饮料、泡面、薯片、夜宵，宿舍门口收货</view>
+  </view>
+
+  <view class="card quick-entry">
+    <view class="entry">送到寝室</view>
+    <view class="entry">代理点自提</view>
+    <view class="entry">今日特价</view>
+  </view>
+
+  <view class="section-title">热门零食</view>
+  <view class="product-list">
+    <view class="product-card card" wx:for="{{products}}" wx:key="id">
+      <image class="product-image" src="{{item.coverUrl}}" mode="aspectFill" />
+      <view class="product-info">
+        <view class="product-name">{{item.name}}</view>
+        <view class="product-desc">{{item.description}}</view>
+        <view class="product-bottom">
+          <text class="price">¥{{item.price}}</text>
+          <button size="mini" class="primary-btn" bindtap="addToCart" data-id="{{item.id}}">加购</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

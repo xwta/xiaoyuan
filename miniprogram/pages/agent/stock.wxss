@@ -1,0 +1,38 @@
+.title {
+  font-size: 38rpx;
+  font-weight: 700;
+  margin-bottom: 10rpx;
+}
+
+.muted {
+  color: #888;
+  font-size: 24rpx;
+}
+
+.stock-top,
+.stock-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stock-bottom {
+  margin-top: 18rpx;
+  color: #888;
+  font-size: 24rpx;
+}
+
+.name {
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+
+.stock-count {
+  font-size: 42rpx;
+  font-weight: 700;
+  color: #20b26b;
+}
+
+.stock-count.warning {
+  color: #ff4d00;
+}

@@ -1,0 +1,38 @@
+.status-card {
+  background: linear-gradient(135deg, #fff4e6, #ffffff);
+}
+
+.status-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #ff7a00;
+  margin-bottom: 10rpx;
+}
+
+.section-title {
+  font-weight: 700;
+  margin-bottom: 20rpx;
+}
+
+.muted {
+  color: #888;
+  font-size: 24rpx;
+  margin-top: 8rpx;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18rpx;
+}
+
+.footer {
+  position: sticky;
+  bottom: 24rpx;
+  display: flex;
+  gap: 20rpx;
+}
+
+.footer button {
+  flex: 1;
+}

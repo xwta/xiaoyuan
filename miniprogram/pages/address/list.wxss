@@ -1,0 +1,23 @@
+.address-main {
+  font-weight: 700;
+  margin-bottom: 12rpx;
+}
+
+.muted {
+  color: #888;
+  font-size: 24rpx;
+}
+
+.tag {
+  display: inline-block;
+  color: #ff7a00;
+  background: #fff7ed;
+  padding: 6rpx 14rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  margin-top: 16rpx;
+}
+
+.add-btn {
+  margin-top: 40rpx;
+}

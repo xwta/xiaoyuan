@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="card header">
+    <view class="title">代理点库存</view>
+    <view class="muted">低库存商品会优先提示补货</view>
+  </view>
+
+  <view wx:if="{{!list.length}}" class="card empty">暂无库存数据</view>
+
+  <view class="card stock-card" wx:for="{{list}}" wx:key="id">
+    <view class="stock-top">
+      <view>
+        <view class="name">{{item.name}}</view>
+        <view class="muted">分类：{{item.categoryName}}</view>
+      </view>
+      <view class="stock-count {{item.stock <= item.warningStock ? 'warning' : ''}}">{{item.stock}}</view>
+    </view>
+    <view class="stock-bottom">
+      <text>预警库存：{{item.warningStock}}</text>
+      <text>{{item.statusText}}</text>
+    </view>
+  </view>
+</view>

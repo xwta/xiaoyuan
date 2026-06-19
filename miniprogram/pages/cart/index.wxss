@@ -1,0 +1,36 @@
+.cart-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  font-weight: 700;
+  margin-bottom: 12rpx;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  color: #666;
+}
+
+.empty {
+  text-align: center;
+  color: #333;
+}
+
+.muted {
+  color: #888;
+  font-size: 24rpx;
+  margin-top: 12rpx;
+}
+
+.footer {
+  position: sticky;
+  bottom: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

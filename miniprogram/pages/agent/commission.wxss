@@ -1,0 +1,38 @@
+.total-card {
+  background: linear-gradient(135deg, #fff4e6, #ffffff);
+}
+
+.label,
+.muted {
+  color: #888;
+  font-size: 24rpx;
+}
+
+.amount {
+  font-size: 56rpx;
+  font-weight: 700;
+  color: #ff7a00;
+  margin: 16rpx 0;
+}
+
+.section-title {
+  font-weight: 700;
+  margin-bottom: 20rpx;
+}
+
+.record {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22rpx 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.record:last-child {
+  border-bottom: none;
+}
+
+.order-no {
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}

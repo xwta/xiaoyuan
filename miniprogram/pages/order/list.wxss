@@ -1,0 +1,41 @@
+.tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 16rpx;
+}
+
+.tab {
+  white-space: nowrap;
+  padding: 12rpx 22rpx;
+  border-radius: 999rpx;
+  background: #f2f3f5;
+  color: #666;
+}
+
+.tab.active {
+  background: #fff7ed;
+  color: #ff7a00;
+  font-weight: 700;
+}
+
+.order-header,
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status {
+  color: #ff7a00;
+}
+
+.order-products {
+  margin: 20rpx 0 10rpx;
+  font-weight: 700;
+}
+
+.muted {
+  color: #888;
+  font-size: 24rpx;
+  margin-bottom: 20rpx;
+}

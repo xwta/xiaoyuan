@@ -1,0 +1,14 @@
+.field {
+  padding: 22rpx 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.field text {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 14rpx;
+}
+
+.field input {
+  color: #333;
+}

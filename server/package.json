@@ -1,0 +1,17 @@
+{
+  "name": "campus-snack-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "校园零食售卖平台后端服务骨架",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "node src/app.js",
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "mysql2": "latest"
+  }
+}

@@ -1,0 +1,37 @@
+.header .title {
+  font-size: 36rpx;
+  font-weight: 700;
+}
+
+.subtitle,
+.muted {
+  color: #888;
+  font-size: 24rpx;
+  margin-top: 10rpx;
+}
+
+.order-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14rpx;
+}
+
+.order-no {
+  font-weight: 700;
+}
+
+.status {
+  color: #ff7a00;
+}
+
+.amount {
+  margin: 18rpx 0;
+  color: #ff4d00;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16rpx;
+}

@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="card header">
+    <view class="title">代理点订单</view>
+    <view class="subtitle">接单、配送、自提取货都在这里处理</view>
+  </view>
+
+  <view wx:if="{{!orders.length}}" class="card empty">暂无代理订单</view>
+
+  <view class="card" wx:for="{{orders}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+    <view class="order-top">
+      <view class="order-no">{{item.orderNo}}</view>
+      <view class="status">{{item.statusText}}</view>
+    </view>
+    <view class="muted">{{item.deliveryText}} · {{item.buildingName}} {{item.roomNo}}</view>
+    <view class="amount">¥{{item.payAmount}}</view>
+    <view class="actions">
+      <button size="mini" catchtap="acceptOrder" data-id="{{item.id}}">接单</button>
+      <button size="mini" class="primary-btn" catchtap="completeOrder" data-id="{{item.id}}">完成</button>
+    </view>
+  </view>
+</view>
