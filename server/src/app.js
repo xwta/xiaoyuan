@@ -62,6 +62,17 @@ const orders = [
   }
 ];
 
+const agentStocks = [
+  { id: 1, agentId: 1, productId: 1, name: '可乐 500ml', categoryName: '饮料水饮', stock: 24, warningStock: 10, statusText: '正常' },
+  { id: 2, agentId: 1, productId: 3, name: '桶装泡面', categoryName: '泡面速食', stock: 6, warningStock: 10, statusText: '需补货' },
+  { id: 3, agentId: 1, productId: 5, name: '抽纸', categoryName: '宿舍日用', stock: 18, warningStock: 8, statusText: '正常' }
+];
+
+const commissionRecords = [
+  { id: 1, agentId: 1, orderNo: 'SN202606190001', typeText: '送寝订单', amount: 2.0, createdAt: '2026-06-19 22:10' },
+  { id: 2, agentId: 1, orderNo: 'SN202606190002', typeText: '自提订单', amount: 1.2, createdAt: '2026-06-19 21:45' }
+];
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: 'campus-snack-server' });
 });
@@ -145,8 +156,37 @@ app.get('/api/orders/:id', (req, res) => {
   res.json(order);
 });
 
+app.get('/api/agent/summary', (req, res) => {
+  const todaySales = orders.reduce((sum, order) => sum + Number(order.payAmount || 0), 0);
+  const todayCommission = commissionRecords.reduce((sum, record) => sum + Number(record.amount || 0), 0);
+
+  res.json({
+    todayOrders: orders.length,
+    todaySales: Number(todaySales.toFixed(2)),
+    todayCommission: Number(todayCommission.toFixed(2)),
+    pendingOrders: orders.filter(order => order.status === 'pending_accept').length,
+    deliveringOrders: orders.filter(order => order.status === 'delivering').length,
+    pickupOrders: orders.filter(order => order.status === 'waiting_pickup').length
+  });
+});
+
 app.get('/api/agent/orders', (req, res) => {
   res.json(orders);
+});
+
+app.get('/api/agent/stocks', (req, res) => {
+  res.json(agentStocks);
+});
+
+app.get('/api/agent/commissions', (req, res) => {
+  const pending = commissionRecords.reduce((sum, record) => sum + Number(record.amount || 0), 0);
+  res.json({
+    summary: {
+      pending: Number(pending.toFixed(2)),
+      settled: 312.8
+    },
+    records: commissionRecords
+  });
 });
 
 app.post('/api/agent/orders/:id/accept', (req, res) => {
