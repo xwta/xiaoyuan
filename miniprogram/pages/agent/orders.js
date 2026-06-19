@@ -1,34 +1,57 @@
+const { request } = require('../../utils/request');
+
 Page({
   data: {
-    orders: [
-      {
-        id: 1,
-        orderNo: 'SN202606190001',
-        statusText: '待接单',
-        deliveryText: '送到寝室',
-        buildingName: '6号楼',
-        roomNo: '602',
-        payAmount: '18.50'
-      },
-      {
-        id: 2,
-        orderNo: 'SN202606190002',
-        statusText: '待核销',
-        deliveryText: '代理点自提',
-        buildingName: '6号楼',
-        roomNo: '',
-        payAmount: '9.90'
-      }
-    ]
+    orders: [],
+    loading: false
   },
 
-  acceptOrder(event) {
-    console.log('accept order:', event.currentTarget.dataset.id);
-    wx.showToast({ title: '已接单', icon: 'success' });
+  onShow() {
+    this.loadOrders();
   },
 
-  completeOrder(event) {
-    console.log('complete order:', event.currentTarget.dataset.id);
-    wx.showToast({ title: '订单完成', icon: 'success' });
+  async loadOrders() {
+    this.setData({ loading: true });
+    try {
+      const orders = await request({ url: '/agent/orders' });
+      this.setData({
+        orders: orders.map(order => ({
+          ...order,
+          payAmount: Number(order.payAmount || 0).toFixed(2)
+        }))
+      });
+    } catch (error) {
+      console.error('load agent orders failed:', error);
+    } finally {
+      this.setData({ loading: false });
+    }
+  },
+
+  goDetail(event) {
+    wx.navigateTo({
+      url: `/pages/agent/detail?id=${event.currentTarget.dataset.id}`
+    });
+  },
+
+  async acceptOrder(event) {
+    const orderId = event.currentTarget.dataset.id;
+    try {
+      await request({ url: `/agent/orders/${orderId}/accept`, method: 'POST' });
+      wx.showToast({ title: '已接单', icon: 'success' });
+      this.loadOrders();
+    } catch (error) {
+      console.error('accept order failed:', error);
+    }
+  },
+
+  async completeOrder(event) {
+    const orderId = event.currentTarget.dataset.id;
+    try {
+      await request({ url: `/agent/orders/${orderId}/delivered`, method: 'POST' });
+      wx.showToast({ title: '订单完成', icon: 'success' });
+      this.loadOrders();
+    } catch (error) {
+      console.error('complete order failed:', error);
+    }
   }
 });
