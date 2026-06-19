@@ -7,6 +7,7 @@ const campusRoutes = require('./routes/campus');
 const orderRoutes = require('./routes/orders');
 const agentRoutes = require('./routes/agent');
 const userRoutes = require('./routes/users');
+const checkoutRoutes = require('./routes/checkout');
 const adminOverviewRoutes = require('./routes/adminOverview');
 const adminRoutes = require('./routes/admin');
 
@@ -24,6 +25,7 @@ app.use('/api', campusRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', agentRoutes);
 app.use('/api', userRoutes);
+app.use('/api', checkoutRoutes);
 app.use('/api', adminOverviewRoutes);
 app.use('/api', adminRoutes);
 
