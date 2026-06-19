@@ -1,12 +1,37 @@
+const { request } = require('../../utils/request');
+
 Page({
   data: {
     summary: {
-      pending: '86.40',
-      settled: '312.80'
+      pending: '0.00',
+      settled: '0.00'
     },
-    records: [
-      { id: 1, orderNo: 'SN202606190001', typeText: '送寝订单', amount: '2.00', createdAt: '2026-06-19 22:10' },
-      { id: 2, orderNo: 'SN202606190002', typeText: '自提订单', amount: '1.20', createdAt: '2026-06-19 21:45' }
-    ]
+    records: [],
+    loading: false
+  },
+
+  onShow() {
+    this.loadCommissions();
+  },
+
+  async loadCommissions() {
+    this.setData({ loading: true });
+    try {
+      const result = await request({ url: '/agent/commissions' });
+      this.setData({
+        summary: {
+          pending: Number(result.summary.pending || 0).toFixed(2),
+          settled: Number(result.summary.settled || 0).toFixed(2)
+        },
+        records: (result.records || []).map(item => ({
+          ...item,
+          amount: Number(item.amount || 0).toFixed(2)
+        }))
+      });
+    } catch (error) {
+      console.error('load commissions failed:', error);
+    } finally {
+      this.setData({ loading: false });
+    }
   }
 });
