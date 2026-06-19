@@ -18,8 +18,15 @@
     </view>
   </view>
 
+  <view class="card">
+    <view class="item-row">
+      <text>订单实付</text>
+      <text class="price">¥{{order.payAmount}}</text>
+    </view>
+  </view>
+
   <view class="footer card">
-    <button bindtap="acceptOrder">接单</button>
-    <button class="primary-btn" bindtap="completeOrder">完成订单</button>
+    <button loading="{{operating}}" bindtap="acceptOrder">接单</button>
+    <button loading="{{operating}}" class="primary-btn" bindtap="completeOrder">完成订单</button>
   </view>
 </view>
