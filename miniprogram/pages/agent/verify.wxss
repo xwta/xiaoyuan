@@ -10,12 +10,16 @@
   font-size: 24rpx;
 }
 
+.order-input,
 .verify-input {
   text-align: center;
-  font-size: 48rpx;
   font-weight: 700;
-  letter-spacing: 8rpx;
   padding: 30rpx 0;
   margin-bottom: 30rpx;
   border-bottom: 1px solid #eee;
+}
+
+.verify-input {
+  font-size: 48rpx;
+  letter-spacing: 8rpx;
 }
