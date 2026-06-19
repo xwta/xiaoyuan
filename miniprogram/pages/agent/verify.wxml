@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="card">
+    <view class="title">自提核销</view>
+    <view class="muted">输入学生出示的核销码，完成自提订单</view>
+  </view>
+
+  <view class="card">
+    <input class="verify-input" maxlength="8" placeholder="请输入核销码" value="{{verifyCode}}" bindinput="handleInput" />
+    <button class="primary-btn" bindtap="verifyOrder">确认核销</button>
+  </view>
+
+  <view class="card tips">
+    <view>核销后订单将变为已完成，并自动生成代理佣金。</view>
+  </view>
+</view>
