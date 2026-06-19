@@ -10,9 +10,9 @@
     <view class="muted">{{order.addressText}}</view>
   </view>
 
-  <view class="card" wx:if="{{order.verifyCode}}">
-    <view class="section-title">自提核销码</view>
-    <view class="verify-code">{{order.verifyCode}}</view>
+  <view class="card" wx:if="{{order.verifyCode || order.pickupCode}}">
+    <view class="section-title">自提取货码</view>
+    <view class="verify-code">{{order.verifyCode || order.pickupCode}}</view>
   </view>
 
   <view class="card">
@@ -24,17 +24,13 @@
   </view>
 
   <view class="card">
-    <view class="item-row">
-      <text>商品金额</text>
-      <text>¥{{order.productAmount}}</text>
-    </view>
-    <view class="item-row">
-      <text>配送费</text>
-      <text>¥{{order.deliveryFee}}</text>
-    </view>
-    <view class="item-row total">
-      <text>实付金额</text>
-      <text class="price">¥{{order.payAmount}}</text>
-    </view>
+    <view class="item-row"><text>商品金额</text><text>¥{{order.productAmount}}</text></view>
+    <view class="item-row"><text>配送费</text><text>¥{{order.deliveryFee}}</text></view>
+    <view class="item-row total"><text>实付金额</text><text class="price">¥{{order.payAmount}}</text></view>
+  </view>
+
+  <view class="footer card">
+    <button class="primary-btn" loading="{{operating}}" bindtap="checkoutOrder">确认交易</button>
+    <button loading="{{operating}}" bindtap="completeOrder">完成订单</button>
   </view>
 </view>
