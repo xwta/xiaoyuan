@@ -1,64 +1,70 @@
 const express = require('express');
-const { products, orders, agents, buildings } = require('../mock/store');
+const { orders, agents, buildings } = require('../mock/store');
+const productRepository = require('../repositories/productRepository');
 
 const router = express.Router();
 
-router.get('/admin/overview', (req, res) => {
-  const salesAmount = orders.reduce((sum, order) => sum + Number(order.payAmount || 0), 0);
+router.get('/admin/overview', async (req, res, next) => {
+  try {
+    const productList = await productRepository.listProducts();
+    const salesAmount = orders.reduce((sum, order) => sum + Number(order.payAmount || 0), 0);
 
-  res.json({
-    productCount: products.length,
-    orderCount: orders.length,
-    agentCount: agents.length,
-    buildingCount: buildings.length,
-    salesAmount: Number(salesAmount.toFixed(2))
-  });
-});
-
-router.get('/admin/products', (req, res) => {
-  res.json(products);
-});
-
-router.post('/admin/products', (req, res) => {
-  const product = {
-    id: Date.now(),
-    categoryId: Number(req.body.categoryId || 1),
-    name: req.body.name,
-    price: Number(req.body.price || 0),
-    count: Number(req.body.count || 0),
-    status: req.body.status || 'on',
-    tags: req.body.tags || []
-  };
-
-  products.unshift(product);
-  res.json({ success: true, data: product });
-});
-
-router.put('/admin/products/:id', (req, res) => {
-  const product = products.find(item => item.id === Number(req.params.id));
-  if (!product) {
-    res.status(404).json({ message: '商品不存在' });
-    return;
+    res.json({
+      productCount: productList.length,
+      orderCount: orders.length,
+      agentCount: agents.length,
+      buildingCount: buildings.length,
+      salesAmount: Number(salesAmount.toFixed(2))
+    });
+  } catch (error) {
+    next(error);
   }
-
-  product.name = req.body.name ?? product.name;
-  product.price = req.body.price !== undefined ? Number(req.body.price) : product.price;
-  product.count = req.body.count !== undefined ? Number(req.body.count) : product.count;
-  product.categoryId = req.body.categoryId !== undefined ? Number(req.body.categoryId) : product.categoryId;
-  product.status = req.body.status || product.status || 'on';
-
-  res.json({ success: true, data: product });
 });
 
-router.delete('/admin/products/:id', (req, res) => {
-  const index = products.findIndex(item => item.id === Number(req.params.id));
-  if (index === -1) {
-    res.status(404).json({ message: '商品不存在' });
-    return;
+router.get('/admin/products', async (req, res, next) => {
+  try {
+    const result = await productRepository.listProducts();
+    res.json(result);
+  } catch (error) {
+    next(error);
   }
+});
 
-  const [removed] = products.splice(index, 1);
-  res.json({ success: true, data: removed });
+router.post('/admin/products', async (req, res, next) => {
+  try {
+    const product = await productRepository.createProduct(req.body);
+    res.json({ success: true, data: product });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/admin/products/:id', async (req, res, next) => {
+  try {
+    const product = await productRepository.updateProductById(req.params.id, req.body);
+    if (!product) {
+      res.status(404).json({ message: '商品不存在' });
+      return;
+    }
+
+    res.json({ success: true, data: product });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/admin/products/:id', async (req, res, next) => {
+  try {
+    const product = await productRepository.removeProductById(req.params.id);
+    if (!product) {
+      res.status(404).json({ message: '商品不存在' });
+      return;
+    }
+
+    res.json({ success: true, data: product });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get('/admin/orders', (req, res) => {
