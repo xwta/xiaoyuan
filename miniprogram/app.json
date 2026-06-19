@@ -8,8 +8,12 @@
     "pages/order/detail",
     "pages/address/list",
     "pages/address/edit",
+    "pages/agent/index",
     "pages/agent/orders",
     "pages/agent/detail",
+    "pages/agent/verify",
+    "pages/agent/commission",
+    "pages/agent/stock",
     "pages/mine/index"
   ],
   "window": {
