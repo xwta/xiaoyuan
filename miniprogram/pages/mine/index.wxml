@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="card user-card">
+    <view class="avatar">零</view>
+    <view>
+      <view class="nickname">校园零食用户</view>
+      <view class="muted">第一校区 · 6号楼</view>
+    </view>
+  </view>
+
+  <view class="card menu-card">
+    <view class="menu-item" bindtap="goOrders">我的订单</view>
+    <view class="menu-item" bindtap="goAddress">寝室地址</view>
+    <view class="menu-item">优惠券</view>
+    <view class="menu-item" bindtap="goAgentOrders">代理点订单</view>
+    <view class="menu-item">我要成为校园代理</view>
+    <view class="menu-item">联系客服</view>
+  </view>
+</view>
