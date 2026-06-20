@@ -50,6 +50,7 @@
 
 - Express API
 - 模块化路由
+- Service 业务层
 - Repository 数据访问层
 - mock 数据模式
 - MySQL 数据模式
@@ -57,6 +58,9 @@
 - 订单接口
 - 校区 / 宿舍楼 / 代理点接口
 - 后台管理接口
+- 订单流程规则
+- 代理点商品数量扩展
+- 流程记录扩展
 
 ## 二、目录结构
 
@@ -74,29 +78,17 @@ docs/          产品、接口、运行、联调文档
 server/src/
 ├── app.js
 ├── config/
-│   └── appConfig.js
 ├── db/
-│   └── index.js
 ├── mock/
-│   └── store.js
 ├── repositories/
-│   ├── productRepository.js
-│   ├── orderRepository.js
-│   └── campusRepository.js
-└── routes/
-    ├── products.js
-    ├── campus.js
-    ├── orders.js
-    ├── agent.js
-    ├── admin.js
-    └── adminOverview.js
+├── routes/
+├── services/
+└── utils/
 ```
 
 ## 三、快速启动
 
 ### 方式一：本地启动
-
-启动后端：
 
 ```bash
 cd server
@@ -156,6 +148,14 @@ docker compose up -d
 database/mysql_init.sql
 ```
 
+系统升级迁移脚本：
+
+```text
+database/migrations/001_flow_record.sql
+database/migrations/002_agent_count.sql
+database/migrations/003_agent_scope.sql
+```
+
 环境变量示例：
 
 ```text
@@ -176,6 +176,7 @@ DB_ENABLED=true  使用 MySQL
 - 校区
 - 宿舍楼
 - 代理点
+- 用户与地址
 - 后台概览
 
 ## 五、核心业务流程
@@ -206,6 +207,16 @@ GET /api/products/:id
 POST /api/orders
 GET  /api/orders
 GET  /api/orders/:id
+POST /api/orders/:id/checkout
+POST /api/orders/:id/complete
+```
+
+### 用户与地址
+
+```text
+POST /api/users/login
+GET  /api/users/:userId/addresses
+POST /api/users/:userId/addresses
 ```
 
 ### 校园基础数据
@@ -231,6 +242,8 @@ POST /api/agent/orders/:id/verify
 ### 后台
 
 ```text
+POST   /api/admin/session
+GET    /api/admin/session
 GET    /api/admin/overview
 GET    /api/admin/products
 POST   /api/admin/products
@@ -243,7 +256,30 @@ POST   /api/admin/agents
 PUT    /api/admin/agents/:id/status
 ```
 
-## 七、当前版本定位
+## 七、系统升级说明
+
+本项目已经新增系统升级方案和部分底层执行：
+
+```text
+docs/系统能力升级方案.md
+docs/系统能力升级执行记录.md
+server/src/services/orderCore.js
+server/src/utils/orderFlow.js
+server/src/utils/result.js
+server/src/utils/fields.js
+server/src/repositories/agentGoodsRepository.js
+server/src/repositories/flowRecordRepository.js
+```
+
+升级方向：
+
+- routes 负责接口入口
+- services 负责业务流程
+- repositories 负责数据读写
+- utils 负责通用能力
+- migrations 负责数据库结构演进
+
+## 八、当前版本定位
 
 当前版本是可继续二开的 MVP 骨架，已经具备：
 
@@ -254,39 +290,49 @@ PUT    /api/admin/agents/:id/status
 - MySQL 渐进式接入
 - 数据库初始化脚本
 - Docker 启动 MySQL + 后端
+- 系统升级方案
+- 订单流程规则基础能力
+- 代理点商品数量扩展表
 
 还不是直接商用上线版本。上线前仍需补齐：
 
-- 微信登录
-- 微信支付
-- 管理后台登录鉴权
-- 真实用户体系
+- 真实小程序身份能力
+- 真实交易能力
+- 管理后台正式鉴权
 - 订单搜索和分页
-- 佣金结算
-- 退款售后
+- 代理结算流程
+- 售后流程
 - 生产环境部署配置
 
-## 八、推荐开发顺序
+## 九、推荐开发顺序
 
 ```text
 1. 本地跑通 mock 模式
 2. 执行 mysql_init.sql
-3. 开启 DB_ENABLED=true
-4. 跑通商品和订单数据库读写
-5. 接入微信登录
-6. 接入微信支付
-7. 完善后台权限
-8. 上线前做安全和异常处理
+3. 执行 database/migrations 下的升级脚本
+4. 开启 DB_ENABLED=true
+5. 跑通商品、订单、用户、地址数据库读写
+6. 将 routes 逐步切到 services
+7. 接入真实小程序身份能力
+8. 接入真实交易能力
+9. 完善后台权限和操作日志
+10. 上线前做生产配置和异常处理
 ```
 
-## 九、相关文档
+## 十、相关文档
 
 ```text
 docs/产品方案.md
+docs/产品方案_终版.md
+docs/系统能力升级方案.md
+docs/系统能力升级执行记录.md
 docs/API接口设计.md
 docs/运行说明.md
 docs/前后端联调说明.md
 docs/开发进度.md
 docs/校园零食平台二开方案.md
+docs/交付验收清单.md
+docs/功能全量完成说明.md
+docs/最终开发完成说明.md
 database/README.md
 ```
