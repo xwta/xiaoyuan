@@ -11,6 +11,9 @@ const checkoutRoutes = require('./routes/checkout');
 const sessionRoutes = require('./routes/adminAuth');
 const adminOverviewRoutes = require('./routes/adminOverview');
 const adminRoutes = require('./routes/admin');
+const areaReadRoutes = require('./routes/areaRead');
+const agentGoodsReadRoutes = require('./routes/agentGoodsRead');
+const recordReadRoutes = require('./routes/recordRead');
 
 const app = express();
 
@@ -30,14 +33,17 @@ app.use('/api', checkoutRoutes);
 app.use('/api', sessionRoutes);
 app.use('/api', adminOverviewRoutes);
 app.use('/api', adminRoutes);
+app.use('/api', areaReadRoutes);
+app.use('/api', agentGoodsReadRoutes);
+app.use('/api', recordReadRoutes);
 
 app.use((req, res) => {
-  res.status(404).json({ message: '接口不存在' });
+  res.status(404).json({ message: 'not found' });
 });
 
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).json({ message: '服务异常' });
+  res.status(500).json({ message: 'server error' });
 });
 
 app.listen(config.port, () => {
