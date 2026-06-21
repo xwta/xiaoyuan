@@ -61,4 +61,20 @@ export function fetchAgentSummary() {
   return http.get('/agent/summary').then(res => res.data);
 }
 
+export function fetchOpsAreas() {
+  return http.get('/ops/areas').then(res => res.data.data || []);
+}
+
+export function fetchOpsBlocks(params = {}) {
+  return http.get('/ops/blocks', { params }).then(res => res.data.data || []);
+}
+
+export function fetchOpsGoods(params = {}) {
+  return http.get('/ops/goods', { params }).then(res => res.data.data || []);
+}
+
+export function fetchOpsRecords(bizId) {
+  return http.get(`/ops/records/${bizId}`).then(res => res.data.data || []);
+}
+
 export default http;
